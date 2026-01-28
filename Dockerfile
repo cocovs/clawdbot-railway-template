@@ -1,4 +1,8 @@
 # Build clawdbot from source to avoid npm packaging gaps (some dist files are not shipped).
+# Global ARGs available to all stages
+ARG CLAWDBOT_GIT_REF=main
+ARG MINIMAX_BASE_URL=https://api.minimaxi.com/anthropic
+
 FROM node:22-bookworm AS clawdbot-build
 
 # Dependencies needed for clawdbot build
@@ -21,7 +25,6 @@ RUN corepack enable
 WORKDIR /clawdbot
 
 # Pin to a known ref (tag/branch). If it doesn't exist, fall back to main.
-ARG CLAWDBOT_GIT_REF=main
 RUN git clone --depth 1 --branch "${CLAWDBOT_GIT_REF}" https://github.com/clawdbot/clawdbot.git .
 
 # Patch: relax version requirements for packages that may reference unpublished versions.
@@ -34,6 +37,7 @@ RUN set -eux; \
 
 RUN pnpm install --no-frozen-lockfile
 RUN pnpm build
+ENV MINIMAX_BASE_URL=${MINIMAX_BASE_URL}
 ENV CLAWDBOT_PREFER_PNPM=1
 RUN pnpm ui:install && pnpm ui:build
 
@@ -41,6 +45,7 @@ RUN pnpm ui:install && pnpm ui:build
 # Runtime image
 FROM node:22-bookworm
 ENV NODE_ENV=production
+ENV MINIMAX_BASE_URL=${MINIMAX_BASE_URL}
 
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
