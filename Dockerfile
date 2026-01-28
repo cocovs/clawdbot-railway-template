@@ -1,6 +1,6 @@
 # Build clawdbot from source to avoid npm packaging gaps (some dist files are not shipped).
 # Global ARGs available to all stages
-ARG CLAWDBOT_GIT_REF=main
+ARG MOLTBOT_GIT_REF=main
 ARG MINIMAX_BASE_URL=https://api.minimaxi.com/anthropic
 
 FROM node:22-bookworm AS clawdbot-build
@@ -25,7 +25,7 @@ RUN corepack enable
 WORKDIR /clawdbot
 
 # Pin to a known ref (tag/branch). If it doesn't exist, fall back to main.
-RUN git clone --depth 1 --branch "${CLAWDBOT_GIT_REF}" https://github.com/clawdbot/clawdbot.git .
+RUN git clone --depth 1 --branch "${MOLTBOT_GIT_REF}" https://github.com/moltbot/moltbot.git .
 
 # Patch: relax version requirements for packages that may reference unpublished versions.
 # Apply to all extension package.json files to handle workspace protocol (workspace:*).
