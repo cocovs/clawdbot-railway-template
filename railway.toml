@@ -8,3 +8,9 @@ restartPolicyType = "on_failure"
 
 [variables]
 PORT = "8080"
+ANTHROPIC_BASE_URL = "https://router.shengsuanyun.com/api"
+ANTHROPIC_MODEL = "anthropic/claude-sonnet-4-20250514"
+ANTHROPIC_SMALL_FAST_MODEL = "anthropic/claude-haiku-4-20250514"
+ANTHROPIC_DEFAULT_OPUS_MODEL = "anthropic/claude-opus-4-20250514"
+ANTHROPIC_DEFAULT_SONNET_MODEL = "anthropic/claude-sonnet-4-20250514"
+ANTHROPIC_DEFAULT_HAIKU_MODEL = "anthropic/claude-haiku-4-20250514"
