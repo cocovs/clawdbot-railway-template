@@ -25,7 +25,7 @@ RUN corepack enable
 WORKDIR /clawdbot
 
 # Pin to a known ref (tag/branch). If it doesn't exist, fall back to main.
-RUN git clone --depth 1 --branch "${MOLTBOT_GIT_REF}" https://github.com/moltbot/moltbot.git .
+RUN git clone --depth 1 --branch "${MOLTBOT_GIT_REF:-main}" https://github.com/moltbot/moltbot.git .
 
 # Patch: relax version requirements for packages that may reference unpublished versions.
 # Apply to all extension package.json files to handle workspace protocol (workspace:*).
